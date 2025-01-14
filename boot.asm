@@ -1,14 +1,17 @@
 [org 0x7c00]
 
-mov ah, 0x0e            ; scrolling teletype BIOS routine
+mov bp, 0x8000          ; Initialize the stack
+mov sp, bp
 
-mov al, [the_secret]    ; this address is relative to the addres in the org directive
-int 0x10
+mov ax, start_message    ; this address is relative to the addres in the org directive
+call print_string
 
 jmp $                   ; Infinite loop, the "os"
 
-the_secret:
-    db "X"
+%include "print_string.asm"
+
+start_message:
+    db 'Booting OS', 0
 
 times 510-($-$$) db 0   ; Pad 0s until the 510th byte
 
