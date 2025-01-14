@@ -1,21 +1,29 @@
 [org 0x7c00]
 
-mov bp, 0x8000          ; Initialize the stack
-mov sp, bp
+    mov bp, 0x8000          ; Initialize the stack out of the way
+    mov sp, bp
 
-mov ax, start_message    ; this address is relative to the addres in the org directive
-call print_string
+    mov ax, MSG_REAL_MODE
+    call print_string
 
-mov dx, 0x4321
-call print_hex
+    call switch_to_pm       ; Enter protected mode
 
-jmp $                   ; Infinite loop, the "os"
+    jmp $                   
 
 %include "print.asm"
+%include "gdt.asm"
+%include "pm.asm"
 
-start_message:
-    db 'Booting OS', 0
+BEGIN_PM:
+    mov ebx, MSG_PROT_MODE
+    call print_string_pm
 
-times 510-($-$$) db 0   ; Pad 0s until the 510th byte
+    jmp $
 
-dw 0xaa55               ; Magic number for BIOS to detect boot sector
+MSG_REAL_MODE db "Started in 16-bit Real Mode", 0
+MSG_PROT_MODE db "Successfully landed in 32 - bit Protected Mode", 0
+
+; Boot sector detection
+times 510-($-$$) db 0
+dw 0xaa55
+
