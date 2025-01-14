@@ -21,3 +21,49 @@ print_string_loop_start:
 print_string_loop_end:
     popa
     ret
+
+; Prints the value in dx in hex.
+print_hex:
+    pusha
+
+    mov cx, dx
+    and cx, 0x0f        ; Isolate lowest half-byte
+    call calc_hex_digit
+    mov [HEX_OUT+5], cl
+
+    shr dx, 4           ; Shift over a half-byte
+    mov cx, dx
+    and cx, 0x0f
+    call calc_hex_digit
+    mov [HEX_OUT+4], cl
+
+    shr dx, 4
+    mov cx, dx
+    and cx, 0x0f
+    call calc_hex_digit
+    mov [HEX_OUT+3], cl
+
+    shr dx, 4
+    mov cx, dx
+    and cx, 0x0f
+    call calc_hex_digit
+    mov [HEX_OUT+2], cl
+
+    mov ax, HEX_OUT
+    call print_string
+
+    popa
+    ret
+
+calc_hex_digit:
+    cmp cl, 9
+    jg alpha_hex_digit
+    add cl, 0x30
+
+alpha_hex_digit:
+    add cl, 0x37
+    ret
+
+
+HEX_OUT: db '0x0000',0
+

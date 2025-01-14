@@ -6,9 +6,12 @@ mov sp, bp
 mov ax, start_message    ; this address is relative to the addres in the org directive
 call print_string
 
+mov dx, 0x4321
+call print_hex
+
 jmp $                   ; Infinite loop, the "os"
 
-%include "print_string.asm"
+%include "print.asm"
 
 start_message:
     db 'Booting OS', 0
