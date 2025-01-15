@@ -15,10 +15,10 @@ KERNEL_OFFSET equ 0x1000    ; The memory address where the kernel will be loaded
 
     jmp $                   
 
-%include "print.asm"
-%include "gdt.asm"
-%include "pm.asm"
-%include "disk.asm"
+%include "./print.asm"
+%include "./gdt.asm"
+%include "./pm.asm"
+%include "./disk.asm"
 
 [bits 16]
 load_kernel:
