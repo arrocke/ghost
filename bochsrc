@@ -1,3 +1,3 @@
-floppya: 1_44=ghost.bin, status=inserted
+floppya: 1_44=ghost.img, status=inserted
 boot: a
 magic_break: enabled=1
