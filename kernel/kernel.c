@@ -1,5 +1,9 @@
-void main() {
-    char * video_memory = (char *) 0xb8000;
+#include "screen.h"
 
-    *video_memory = 'X';
+void main() {
+    clear();
+    print("Hello world!\n");
+    for (int i = 0; i < 24; i++) {
+        print("Another Line\n");
+    }
 }
