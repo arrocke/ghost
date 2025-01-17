@@ -3,3 +3,8 @@
 
     call main
     jmp $
+
+GLOBAL breakpoint
+breakpoint:
+    xchg bx, bx
+    ret
