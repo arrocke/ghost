@@ -1,6 +1,9 @@
 all: build/ghost.img
 
 run: all
+	qemu-system-i386 -drive file=build/ghost.img,format=raw,if=floppy
+
+debug: all
 	bochs -q
 
 build/ghost.img: build/boot/boot.bin build/kernel/kernel.bin 
